@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import io.github.oblarg.oblog.Logger;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -56,15 +57,8 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        s_Swerve.setDefaultCommand(
-            new TeleopSwerve(
-                s_Swerve, 
-                () -> -strafe.getRawAxis(Joystick.AxisType.kY.value)*Math.abs(strafe.getRawAxis(Joystick.AxisType.kY.value)), 
-                () -> -strafe.getRawAxis(Joystick.AxisType.kX.value)*Math.abs(strafe.getRawAxis(Joystick.AxisType.kX.value)), 
-                () -> -rotate.getRawAxis(Joystick.AxisType.kX.value), 
-                () -> false // always field centric
-            )
-        );
+        // Configure Oblog
+        Logger.configureLoggingAndConfig(this, false);
 
         // Configure the button bindings
         configureButtonBindings();
@@ -80,6 +74,21 @@ public class RobotContainer {
             Constants.AutoConstants.eventMap,
             true,
             s_Swerve
+        );
+    }
+
+    /**
+     * Schedules default commands during teleopInit
+     */
+    public void scheduleDefaultTeleop() {
+        s_Swerve.setDefaultCommand(
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> -strafe.getRawAxis(Joystick.AxisType.kY.value)*Math.abs(strafe.getRawAxis(Joystick.AxisType.kY.value)), 
+                () -> -strafe.getRawAxis(Joystick.AxisType.kX.value)*Math.abs(strafe.getRawAxis(Joystick.AxisType.kX.value)), 
+                () -> -rotate.getRawAxis(Joystick.AxisType.kX.value), 
+                () -> false // always field centric
+            )
         );
     }
 

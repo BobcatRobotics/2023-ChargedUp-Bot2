@@ -13,8 +13,10 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import io.github.oblarg.oblog.Loggable;
+import io.github.oblarg.oblog.annotations.Log;
 
-public class Limelight extends SubsystemBase {
+public class Limelight extends SubsystemBase implements Loggable {
   private boolean initialized = false;
   private NetworkTableEntry tTarget = null;
   private NetworkTableEntry tx = null;
@@ -74,6 +76,7 @@ public class Limelight extends SubsystemBase {
     return hits;
   }
 
+  @Log
   public double[] botPose() {
     double[] botPose = null;
     SmartDashboard.putBoolean("Limelight Inititialized", isInitialized());
@@ -83,6 +86,7 @@ public class Limelight extends SubsystemBase {
     return botPose;
   }
 
+  @Log
   public double targetDist() {
     double[] targetPose = null;
     if (isInitialized()) {
